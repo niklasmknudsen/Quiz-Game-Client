@@ -1,0 +1,69 @@
+{
+  "id": "1",
+  "category": "Science",
+  "field": "Computer science",
+  "points": 12,
+  "description": "Which design pattern is mostly used???",
+  "answers": [
+    {
+      "answer": {
+        "id": "1",
+        "answerName": "Singleton",
+        "question": {
+          "id": 1
+        },
+        "trueAnswer": false,
+        "explanation": "singleton creates a instance of an object, witch can only be created once",
+        "url": "https://en.wikipedia.org/wiki/Singleton_pattern"
+      }
+    },
+    {
+      "answer": {
+        "id": "2",
+        "answerName": "Adapter",
+        "question": {
+          "id": 1
+        },
+        "trueAnswer": false,
+        "explanation": "In software engineering, the adapter pattern is a software design pattern (also known as wrapper, an alternative naming shared with the decorator pattern) that allows the interface of an existing class to be used as another interface",
+        "url": "https://en.wikipedia.org/wiki/Adapter_pattern"
+      }
+    },
+    {
+      "answer": {
+        "id": "3",
+        "answerName": "Observer",
+        "question": {
+          "id": 1
+        },
+        "trueAnswer": false,
+        "explanation": "The observer pattern is a software design pattern in which an object, named the subject, maintains a list of its dependents, called observers, and notifies them automatically of any state changes, usually by calling one of their methods.",
+        "url": "https://en.wikipedia.org/wiki/Observer_pattern"
+      }
+    },
+    {
+      "answer": {
+        "id": "4",
+        "answerName": "Iterator",
+        "question": {
+          "id": 1
+        },
+        "trueAnswer": false,
+        "explanation": "In object-oriented programming, the iterator pattern is a design pattern in which an iterator is used to traverse a container and access the container's elements. The iterator pattern decouples algorithms from containers; in some cases, algorithms are necessarily container-specific and thus cannot be decoupled.",
+        "url": "https://en.wikipedia.org/wiki/Iterator_pattern"
+      }
+    },
+    {
+      "answer": {
+        "id": "5",
+        "answerName": "Composite",
+        "question": {
+          "id": 1
+        },
+        "trueAnswer": false,
+        "explanation": "In software engineering, the composite pattern is a partitioning design pattern. The composite pattern describes a group of objects that are treated the same way as a single instance of the same type of object. The intent of a composite is to \"compose\" objects into tree structures to represent part-whole hierarchies. Implementing the composite pattern lets clients treat individual objects and compositions uniformly",
+        "url": "https://en.wikipedia.org/wiki/Composite_pattern"
+      }
+    }
+  ]
+}
