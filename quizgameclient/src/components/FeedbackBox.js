@@ -4,7 +4,7 @@ function FeedbackBox(props) {
 
     return (
         <section>
-            <p>{props.answer}</p>
+            <p>{props.explanation}</p>
 
             Source:<a href={props.url}>Link to source</a>
         </section>
