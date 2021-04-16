@@ -12,7 +12,7 @@
         "question": {
           "id": 1
         },
-        "trueAnswer": false,
+        "trueAnswer": true,
         "explanation": "singleton creates a instance of an object, witch can only be created once",
         "url": "https://en.wikipedia.org/wiki/Singleton_pattern"
       }
