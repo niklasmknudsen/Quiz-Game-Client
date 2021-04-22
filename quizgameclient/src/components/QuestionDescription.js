@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/questionDescription.css';
 
 function QuestionDescription(props) {
     return (

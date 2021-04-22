@@ -1,0 +1,35 @@
+.question-header {
+    background-color: rgba(0,0,0,0.35);
+    padding: 20px 20px 10px 20px;
+    border-radius: 3px;
+    box-shadow: inset 0px 0px 150px 0px #000000;
+}
+
+    .question-header label {
+        display: block;
+        font-weight: bold;
+        font-size: 12px;
+        text-transform: uppercase;
+        margin-bottom: -30px;
+        letter-spacing: 3px;
+        text-decoration:underline;
+    }
+
+    .question-header h1 {
+        color: #ffffff;
+        font-size: 40px;
+        text-shadow: 0px 0px 7px #000000;
+    }
+
+    .question-header h3 {
+        color: #ffffff;
+        font-size: 25px;
+        text-shadow: 0px 0px 7px #000000;
+    }
+
+    .question-header p {
+        color: #ffffff;
+        margin-top: 30px;
+        font-size: 18px;
+        text-shadow: 0px 0px 7px #000000;
+    }

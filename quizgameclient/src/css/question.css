@@ -1,0 +1,71 @@
+/* Question-sidens container article */
+#page-header {
+    /*display: grid;
+    grid-template-columns: 1fr;*/
+    width: 800px;
+    margin: 75px auto;
+    border: 1px solid #808080;
+    padding: 40px 40px 60px 40px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 15px 1px #000000;
+    background-color: rgba(255,255,255, 0.95);
+}
+
+/* Container til alle svarmulighederne */
+.answers-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    border-bottom: 1px solid #808080;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Hver svarmulighed */
+.answer-suggestions {
+    background-color: mediumturquoise;
+    padding: 10px 0px;
+}
+
+    .answer-suggestions:hover {
+        background-color: cadetblue;
+    }
+
+/* Det rigtige svar markeres med grøn baggrund */
+.green {
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background-color: forestgreen;
+    transform: scale(1.05);
+}
+
+/* Det forkerte svar markeres med rød baggrund */
+.red {
+    color: #ffffff;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background-color: red;
+    transform: scale(1.05);
+}
+
+/* */
+#feeback-area {
+    
+}
+
+#feeback-area a {
+    display: block;
+    background-color: cornflowerblue;
+    padding: 7px 10px;
+    text-decoration: none;
+    width: 130px;
+    margin: 10px auto;
+    color: #ffffff;
+    text-shadow: 0px 0px 3px #000000;
+}
+
+/* Gør svaret usynligt */
+.hidden-field {
+    display: none;
+}

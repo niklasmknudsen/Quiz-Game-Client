@@ -3,6 +3,7 @@ import QuestionHeader from './QuestionHeader';
 import QuestionDescription from './QuestionDescription';
 import AnswerBox from './AnswerBox';
 import FeedbackBox from './FeedbackBox';
+import '../css/question.css';
 
 class Question extends Component {
 
@@ -198,7 +199,7 @@ class Question extends Component {
                         <QuestionDescription description={question.description}></QuestionDescription>
                     </div>
 
-                    <div className="">
+                    <div className="answers-container">
                         {answers.map((answerProperty) => (
                             <div className="answer-suggestions" key={answerProperty.answer.id} dataset-id = { answerProperty.answer.id } onClick = { this.handleClick } >
                                 <AnswerBox key={answerProperty.answer.id} answer={answerProperty.answer.answerName} />
