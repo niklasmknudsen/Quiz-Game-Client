@@ -33,11 +33,13 @@ class Question extends Component {
             const selectedAnswer = this.findAnswerById(selectedAnswerIndex);
             const selectedQuestion = this.state.question;
 
+            console.log(selectedAnswer)
             // creates a new instace of a answeredQuestion
             const answeredQuestionDTO = {
-                question: selectedQuestion,
-                answer: selectedAnswer.answer
+                answer: selectedAnswer.id
+                
             };
+            console.log(answeredQuestionDTO);
 
             // calls post endpoint
             this.createAnsweredQuestion(answeredQuestionDTO);
@@ -79,8 +81,8 @@ class Question extends Component {
      */
     createAnsweredQuestion(AnsweredQuestionDTO) {
         let newAnsweredQuestion = null;
-
-        fetch('/assets/data/answeredQuestion.json', {
+        ///assets/data/answeredQuestion.json
+        fetch('http://localhost:8087/question/'+''+'/answer/', {
             method: 'post',
             body: JSON.stringify(AnsweredQuestionDTO)
         }).then(function (response) {
@@ -153,13 +155,14 @@ class Question extends Component {
         /* /quesition/:id
          * fetch question from database
          */
-        fetch("/assets/data/question.json")
+        fetch("http://localhost:8087/question/29c19107-9a91-45ae-8f27-9fb96c095d10")
             .then(res => res.json())
             .then(
                 (result) => {
                     let questionResult = result;
                     let answersResultSet = [];
 
+                    console.log(result)
                     Array.from(questionResult.answers).forEach((item) => {
                         if (item !== null) {
                             answersResultSet.push(item);
