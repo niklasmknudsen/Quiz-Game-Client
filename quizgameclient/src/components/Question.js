@@ -23,7 +23,7 @@ class Question extends Component {
     }
 
     handleClick = (e) => {
-        if (this.state.clickedTimes < 1) {
+        if (this.state.clickedTimes < 3) {
             // call method to clear elements from color classes.
             this.clearAnswersFromColors();
             // gets target element
@@ -34,7 +34,7 @@ class Question extends Component {
             const selectedAnswer = this.findAnswerById(selectedAnswerIndex);
             const selectedQuestion = this.state.question;
 
-            console.log(typeof(selectedAnswer.id))
+            console.log(typeof (selectedAnswer.id))
             // creates a new instace of a answeredQuestion
             const answeredQuestionDTO = {
                 answer: selectedAnswer.id
@@ -43,15 +43,41 @@ class Question extends Component {
             console.log(answeredQuestionDTO);
 
             // calls post endpoint
-            const newAnsweredQuestion = this.createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer, targetEl);
+            let newAnsweredQuestion = null;
+            fetch('http://localhost:8087/question/' + selectedQuestion.id + '/answer/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "answer": answeredQuestionDTO.answer })
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                newAnsweredQuestion = data;
+                console.log(newAnsweredQuestion)
 
-            this.setState({
-                clickedTimes: 1,
-                correctAnswer: newAnsweredQuestion
+
+                if (newAnsweredQuestion.trueAnswer === true) {
+                    targetEl.classList.add('green');
+
+                    console.log(targetEl.classList.contains('green'));
+                } else {
+                    targetEl.classList.add('red');
+
+                }
+
+
+                this.setState({
+                    clickedTimes: 1,
+                    correctAnswer: newAnsweredQuestion
+                });
+
+                let feedBackArea = document.getElementById("feeback-area");
+                feedBackArea.classList.toggle("hidden-field");
+
+            }).catch((error) => {
+                console.log(error);
             });
-
-            let feedBackArea = document.getElementById("feeback-area");
-            feedBackArea.classList.toggle("hidden-field");
         }
     };
 
@@ -59,37 +85,37 @@ class Question extends Component {
      * Method to create a new instance of answeredQuestion
      * @param {any} newAnsweredQuestion
      */
-    createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer, targetEl) {
-        let newAnsweredQuestion = null;
-        console.log(answeredQuestionDTO)
-        ///assets/data/answeredQuestion.json
-        fetch('http://localhost:8087/question/' + selectedQuestion.id + '/answer/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({"answer": answeredQuestionDTO.answer})
-        }).then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            newAnsweredQuestion = data;
-            console.log(newAnsweredQuestion)
-
-
-            if (newAnsweredQuestion.trueAnswer === true) {
-                targetEl.classList.add('green');
-
-                console.log(targetEl.classList.contains('green'));
-            } else {
-                targetEl.classList.add('red');
-                
-            }
-
-            return newAnsweredQuestion;
-        }).catch((error) => {
-            console.log(error);
-        });
-    };
+    /* createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer, targetEl) {
+         let newAnsweredQuestion = null;
+         console.log(answeredQuestionDTO)
+         ///assets/data/answeredQuestion.json
+         fetch('http://localhost:8087/question/' + selectedQuestion.id + '/answer/', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+             body: JSON.stringify({"answer": answeredQuestionDTO.answer})
+         }).then(function (response) {
+             return response.json();
+         }).then(function (data) {
+             newAnsweredQuestion = data;
+             console.log(newAnsweredQuestion)
+ 
+ 
+             if (newAnsweredQuestion.trueAnswer === true) {
+                 targetEl.classList.add('green');
+ 
+                 console.log(targetEl.classList.contains('green'));
+             } else {
+                 targetEl.classList.add('red');
+                 
+             }
+ 
+             return newAnsweredQuestion;
+         }).catch((error) => {
+             console.log(error);
+         });
+     }; */
 
     clearAnswersFromColors() {
         let childElements = document.querySelectorAll('.answer-suggestions');
@@ -125,6 +151,12 @@ class Question extends Component {
             return null;
         }
     };
+
+    componentDidUpdate(prevProps) {
+
+
+
+    }
 
 
     componentDidMount() {
