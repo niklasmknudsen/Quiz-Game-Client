@@ -14,7 +14,7 @@ class Question extends Component {
             isLoaded: false,
             questions: [],
             question: null,
-            correctAnswer: null,
+            correctAnswer: {},
             answers: [],
             clickedTimes: 0
         };
@@ -45,7 +45,7 @@ class Question extends Component {
             this.createAnsweredQuestion(answeredQuestionDTO);
 
             // handle DOM manipulation of correct answer. 
-            if (this.state.correctAnswer.answer.id === selectedAnswer.answer.id) {
+            if (this.state.correctAnswer.id === selectedAnswer.id) {
                 targetEl.classList.add('green');
 
                 console.log(targetEl.classList.contains('green'));
@@ -122,7 +122,7 @@ class Question extends Component {
         if (answers.length > 0) {
             for (let key in answers) {
                 try {
-                    if (parseInt(answers[key].answer.id) === parseInt(idx)) {
+                    if (parseInt(answers[key].id) === parseInt(idx)) {
                         return answers[key];
                     }
                 } catch (error) {
@@ -132,22 +132,6 @@ class Question extends Component {
         } else {
             return null;
         }
-    };
-
-    /**
-     * Method used to find correct answer from the selected Question answers
-     * @param {any} array
-     */
-    findCorrectAnswer(array) {
-        let found = null;
-        for (let key in array) {
-            if (array[key].answer.trueAnswer === true) {
-                found = array[key];
-                break;
-            }
-        }
-
-        return found;
     };
 
 
@@ -162,17 +146,17 @@ class Question extends Component {
                     let questionResult = result;
                     let answersResultSet = [];
 
-                    console.log(result)
+
                     Array.from(questionResult.answers).forEach((item) => {
                         if (item !== null) {
                             answersResultSet.push(item);
                         }
                     });
 
+                    console.log(answersResultSet)
                     this.setState({
                         isLoaded: true,
                         question: questionResult,
-                        correctAnswer: this.findCorrectAnswer(answersResultSet),
                         answers: answersResultSet
                     });
                     console.log(this.state.correctAnswer);
@@ -204,13 +188,13 @@ class Question extends Component {
 
                     <div className="answers-container">
                         {answers.map((answerProperty) => (
-                            <div className="answer-suggestions" key={answerProperty.answer.id} dataset-id = { answerProperty.answer.id } onClick = { this.handleClick } >
-                                <AnswerBox key={answerProperty.answer.id} answer={answerProperty.answer.answerName} />
+                            <div className="answer-suggestions" key={answerProperty.id} dataset-id = { answerProperty.id } onClick = { this.handleClick } >
+                                <AnswerBox key={answerProperty.id} answer={answerProperty.answerName} />
                             </div>
                         ))}
                     </div>
                     <div id="feeback-area" className="hidden-field">
-                        <FeedbackBox explanation={correctAnswer.answer.explanation} url={correctAnswer.answer.url} />
+                        <FeedbackBox explanation={correctAnswer.explanation} url={correctAnswer.url} />
                     </div>
                 </article>
             );   
