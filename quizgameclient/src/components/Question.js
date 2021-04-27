@@ -19,6 +19,7 @@ class Question extends Component {
             clickedTimes: 0
         };
         this.handleClick = this.handleClick.bind(this);
+        this.createAnsweredQuestion = this.createAnsweredQuestion.bind(this);
     }
 
     handleClick = (e) => {
@@ -42,11 +43,15 @@ class Question extends Component {
             console.log(answeredQuestionDTO);
 
             // calls post endpoint
-            this.createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer, targetEl);
+            const newAnsweredQuestion = this.createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer, targetEl);
 
             this.setState({
-                clickedTimes: 1
+                clickedTimes: 1,
+                correctAnswer: newAnsweredQuestion
             });
+
+            let feedBackArea = document.getElementById("feeback-area");
+            feedBackArea.classList.toggle("hidden-field");
         }
     };
 
@@ -56,7 +61,6 @@ class Question extends Component {
      */
     createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer, targetEl) {
         let newAnsweredQuestion = null;
-        let feedBackArea = document.getElementById("feeback-area");
         console.log(answeredQuestionDTO)
         ///assets/data/answeredQuestion.json
         fetch('http://localhost:8087/question/' + selectedQuestion.id + '/answer/', {
@@ -72,12 +76,6 @@ class Question extends Component {
             console.log(newAnsweredQuestion)
 
 
-
-            this.setState({
-                this.state.correctAnswer: newAnsweredQuestion
-            });
-
-
             if (newAnsweredQuestion.trueAnswer === true) {
                 targetEl.classList.add('green');
 
@@ -86,8 +84,6 @@ class Question extends Component {
                 targetEl.classList.add('red');
                 
             }
-
-            feedBackArea.classList.toggle("hidden-field");
 
             return newAnsweredQuestion;
         }).catch((error) => {
