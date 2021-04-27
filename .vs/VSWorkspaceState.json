@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\quizgameclient",
+    "\\quizgameclient\\public",
+    "\\quizgameclient\\public\\assets",
+    "\\quizgameclient\\public\\assets\\data",
+    "\\quizgameclient\\src",
+    "\\quizgameclient\\src\\components"
+  ],
+  "SelectedNode": "\\quizgameclient\\src\\components\\Question.js",
+  "PreviewInSolutionExplorer": false
+}

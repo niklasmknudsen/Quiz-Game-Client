@@ -39,51 +39,10 @@ class Question extends Component {
                 answer: selectedAnswer.id
 
             };
-            console.log(answeredQuestionDTO);
+            console.log(selectedQuestion.id);
 
             // calls post endpoint
-            fetch('http://localhost:8087/question/' + selectedQuestion.id + '/answer/', {
-                method: 'post',
-                body: JSON.stringify(AnsweredQuestionDTO)
-            }).then(function (response) {
-                return response.json();
-            }).then(function (data) {
-                newAnsweredQuestion = data;
-
-
-
-
-                return newAnsweredQuestion;
-            }).catch((error) => {
-                console.log(error);
-            });
-
-
-
-            // handle DOM manipulation of correct answer. 
-            if (this.state.correctAnswer.id === selectedAnswer.id) {
-                targetEl.classList.add('green');
-
-                console.log(targetEl.classList.contains('green'));
-            } else {
-                targetEl.classList.add('red');
-                let childElements = document.querySelectorAll('.answer-suggestions');
-
-                for (let i = 0; i < childElements.length; i++) {
-                    try {
-                        let correctAnswerIndex = parseInt(this.state.correctAnswer.answer.id);
-                        let answerIndexes = parseInt(childElements[i].getAttribute('dataset-id'));
-
-                        if (correctAnswerIndex == answerIndexes) {
-                            childElements[i].classList.add('green');
-                        }
-                    } catch (error) {
-                        console.log(error);
-                    }
-                }
-            }
-
-            let feedBackArea = document.getElementById("feeback-area").classList.toggle("hidden-field");
+            this.createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer);
 
             this.setState({
                 clickedTimes: 1
@@ -95,10 +54,11 @@ class Question extends Component {
      * Method to create a new instance of answeredQuestion
      * @param {any} newAnsweredQuestion
      */
-    createAnsweredQuestion(AnsweredQuestionDTO) {
+    createAnsweredQuestion(selectedQuestion, AnsweredQuestionDTO, selectedAnswer) {
         let newAnsweredQuestion = null;
+        let feedBackArea = document.getElementById("feeback-area");
         ///assets/data/answeredQuestion.json
-        fetch('http://localhost:8087/question/' + '' + '/answer/', {
+        fetch('http://localhost:8087/question/' + selectedQuestion.id + '/answer/', {
             method: 'post',
             body: JSON.stringify(AnsweredQuestionDTO)
         }).then(function (response) {
@@ -108,6 +68,35 @@ class Question extends Component {
 
 
 
+            this.setState({
+                correctAnswer: newAnsweredQuestion
+            });
+
+
+            if (newAnsweredQuestion.id === selectedAnswer.id) {
+                targetEl.classList.add('green');
+
+                console.log(targetEl.classList.contains('green'));
+            } else {
+                targetEl.classList.add('red');
+                let childElements = document.querySelectorAll('.answer-suggestions');
+
+                /*
+                for (let i = 0; i < childElements.length; i++) {
+                    try {
+                        let correctAnswerIndex = parseInt(newAnsweredQuestion.id);
+                        let answerIndexes = parseInt(childElements[i].getAttribute('dataset-id'));
+
+                        if (correctAnswerIndex == answerIndexes) {
+                            childElements[i].classList.add('green');
+                        }
+                    } catch (error) {
+                        console.log(error);
+                    }
+                } */
+            }
+
+            feedBackArea.classList.toggle("hidden-field");
 
             return newAnsweredQuestion;
         }).catch((error) => {
