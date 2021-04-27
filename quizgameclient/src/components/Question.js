@@ -33,16 +33,16 @@ class Question extends Component {
             const selectedAnswer = this.findAnswerById(selectedAnswerIndex);
             const selectedQuestion = this.state.question;
 
-            console.log(selectedAnswer)
+            console.log(typeof(selectedAnswer.id))
             // creates a new instace of a answeredQuestion
             const answeredQuestionDTO = {
                 answer: selectedAnswer.id
 
             };
-            console.log(selectedQuestion.id);
+            console.log(answeredQuestionDTO);
 
             // calls post endpoint
-            this.createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer);
+            this.createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer, targetEl);
 
             this.setState({
                 clickedTimes: 1
@@ -54,46 +54,37 @@ class Question extends Component {
      * Method to create a new instance of answeredQuestion
      * @param {any} newAnsweredQuestion
      */
-    createAnsweredQuestion(selectedQuestion, AnsweredQuestionDTO, selectedAnswer) {
+    createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer, targetEl) {
         let newAnsweredQuestion = null;
         let feedBackArea = document.getElementById("feeback-area");
+        console.log(answeredQuestionDTO)
         ///assets/data/answeredQuestion.json
         fetch('http://localhost:8087/question/' + selectedQuestion.id + '/answer/', {
-            method: 'post',
-            body: JSON.stringify(AnsweredQuestionDTO)
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"answer": answeredQuestionDTO.answer})
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
             newAnsweredQuestion = data;
+            console.log(newAnsweredQuestion)
 
 
 
             this.setState({
-                correctAnswer: newAnsweredQuestion
+                this.state.correctAnswer: newAnsweredQuestion
             });
 
 
-            if (newAnsweredQuestion.id === selectedAnswer.id) {
+            if (newAnsweredQuestion.trueAnswer === true) {
                 targetEl.classList.add('green');
 
                 console.log(targetEl.classList.contains('green'));
             } else {
                 targetEl.classList.add('red');
-                let childElements = document.querySelectorAll('.answer-suggestions');
-
-                /*
-                for (let i = 0; i < childElements.length; i++) {
-                    try {
-                        let correctAnswerIndex = parseInt(newAnsweredQuestion.id);
-                        let answerIndexes = parseInt(childElements[i].getAttribute('dataset-id'));
-
-                        if (correctAnswerIndex == answerIndexes) {
-                            childElements[i].classList.add('green');
-                        }
-                    } catch (error) {
-                        console.log(error);
-                    }
-                } */
+                
             }
 
             feedBackArea.classList.toggle("hidden-field");
