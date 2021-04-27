@@ -14,12 +14,11 @@ class Question extends Component {
             isLoaded: false,
             questions: [],
             question: null,
-            correctAnswer: {},
+            correctAnswer: null,
             answers: [],
             clickedTimes: 0
         };
         this.handleClick = this.handleClick.bind(this);
-        this.createAnsweredQuestion = this.createAnsweredQuestion.bind(this);
     }
 
     handleClick = (e) => {
