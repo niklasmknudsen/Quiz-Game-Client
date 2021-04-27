@@ -19,10 +19,12 @@ class Question extends Component {
             clickedTimes: 0
         };
         this.handleClick = this.handleClick.bind(this);
+        this.handleReset = this.handleReset.bind(this);
     }
 
     handleClick = (e) => {
-        if (this.state.clickedTimes < 3) {
+        let _this = this;
+        if (this.state.clickedTimes < 1) {
             // call method to clear elements from color classes.
             this.clearAnswersFromColors();
             // gets target element
@@ -33,13 +35,11 @@ class Question extends Component {
             const selectedAnswer = this.findAnswerById(selectedAnswerIndex);
             const selectedQuestion = this.state.question;
 
-            console.log(typeof (selectedAnswer.id))
             // creates a new instace of a answeredQuestion
             const answeredQuestionDTO = {
                 answer: selectedAnswer.id
 
             };
-            console.log(answeredQuestionDTO);
 
             // calls post endpoint
             let newAnsweredQuestion = null;
@@ -53,68 +53,29 @@ class Question extends Component {
                 return response.json();
             }).then(function (data) {
                 newAnsweredQuestion = data;
-                console.log(newAnsweredQuestion)
-
 
                 if (newAnsweredQuestion.trueAnswer === true) {
                     targetEl.classList.add('green');
-
-                    console.log(targetEl.classList.contains('green'));
                 } else {
                     targetEl.classList.add('red');
-
                 }
 
-
-                this.setState({
+                _this.setState({
                     clickedTimes: 1,
                     correctAnswer: newAnsweredQuestion
                 });
-
                 let feedBackArea = document.getElementById("feeback-area");
                 feedBackArea.classList.toggle("hidden-field");
-
             }).catch((error) => {
                 console.log(error);
             });
         }
     };
 
-    /**
-     * Method to create a new instance of answeredQuestion
-     * @param {any} newAnsweredQuestion
-     */
-    /* createAnsweredQuestion(selectedQuestion, answeredQuestionDTO, selectedAnswer, targetEl) {
-         let newAnsweredQuestion = null;
-         console.log(answeredQuestionDTO)
-         ///assets/data/answeredQuestion.json
-         fetch('http://localhost:8087/question/' + selectedQuestion.id + '/answer/', {
-             method: 'POST',
-             headers: {
-                 'Content-Type': 'application/json'
-             },
-             body: JSON.stringify({"answer": answeredQuestionDTO.answer})
-         }).then(function (response) {
-             return response.json();
-         }).then(function (data) {
-             newAnsweredQuestion = data;
-             console.log(newAnsweredQuestion)
- 
- 
-             if (newAnsweredQuestion.trueAnswer === true) {
-                 targetEl.classList.add('green');
- 
-                 console.log(targetEl.classList.contains('green'));
-             } else {
-                 targetEl.classList.add('red');
-                 
-             }
- 
-             return newAnsweredQuestion;
-         }).catch((error) => {
-             console.log(error);
-         });
-     }; */
+    handleReset = (e) => {
+        window.location.reload();
+
+    }
 
     clearAnswersFromColors() {
         let childElements = document.querySelectorAll('.answer-suggestions');
@@ -151,13 +112,6 @@ class Question extends Component {
         }
     };
 
-    componentDidUpdate(prevProps) {
-
-
-
-    }
-
-
     componentDidMount() {
         /* /quesition/:id
          * fetch question from database
@@ -169,20 +123,17 @@ class Question extends Component {
                     let questionResult = result;
                     let answersResultSet = [];
 
-
                     Array.from(questionResult.answers).forEach((item) => {
                         if (item !== null) {
                             answersResultSet.push(item);
                         }
                     });
 
-                    console.log(answersResultSet)
                     this.setState({
                         isLoaded: true,
                         question: questionResult,
                         answers: answersResultSet
                     });
-                    console.log(this.state.correctAnswer);
                 },
 
                 (error) => {
@@ -220,6 +171,11 @@ class Question extends Component {
                     <div id="feeback-area" className="hidden-field">
                         <FeedbackBox explanation={correctAnswer.explanation} url={correctAnswer.url} />
                     </div>
+                    <div id="reset-area">
+                            <button onClick={this.handleReset}>
+                                Try Again
+                            </button>
+                    </div>
                 </article>
                 );
             } else {
@@ -237,6 +193,11 @@ class Question extends Component {
                                 </div>
                             ))}
                         </div>
+                        <div id="reset-area">
+                            <button onClick={this.handleReset}>
+                                Try Again
+                            </button>
+                    </div>
                     </article>
                 );
             }
