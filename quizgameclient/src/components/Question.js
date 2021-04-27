@@ -202,8 +202,9 @@ class Question extends Component {
         } else if (!isLoaded) {
             return <div>Loading...</div>;
         } else {
-            return (
-                <article id="page-header">
+            if (correctAnswer !== null) {
+                return (
+                    <article id="page-header">
                     <div>
                         <QuestionHeader category={question.category} field={question.field} points={question.points}></QuestionHeader>
                         <QuestionDescription description={question.description}></QuestionDescription>
@@ -220,7 +221,25 @@ class Question extends Component {
                         <FeedbackBox explanation={correctAnswer.explanation} url={correctAnswer.url} />
                     </div>
                 </article>
-            );
+                );
+            } else {
+                return (
+                    <article id="page-header">
+                        <div>
+                            <QuestionHeader category={question.category} field={question.field} points={question.points}></QuestionHeader>
+                            <QuestionDescription description={question.description}></QuestionDescription>
+                        </div>
+
+                        <div className="answers-container">
+                            {answers.map((answerProperty) => (
+                                <div className="answer-suggestions" key={answerProperty.id} dataset-id={answerProperty.id} onClick={this.handleClick} >
+                                    <AnswerBox key={answerProperty.id} answer={answerProperty.answerName} />
+                                </div>
+                            ))}
+                        </div>
+                    </article>
+                );
+            }
         }
     }
 
