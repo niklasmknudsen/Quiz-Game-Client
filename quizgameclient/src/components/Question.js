@@ -37,12 +37,28 @@ class Question extends Component {
             // creates a new instace of a answeredQuestion
             const answeredQuestionDTO = {
                 answer: selectedAnswer.id
-                
+
             };
             console.log(answeredQuestionDTO);
 
             // calls post endpoint
-            this.createAnsweredQuestion(answeredQuestionDTO);
+            fetch('http://localhost:8087/question/' + selectedQuestion.id + '/answer/', {
+                method: 'post',
+                body: JSON.stringify(AnsweredQuestionDTO)
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                newAnsweredQuestion = data;
+
+
+
+
+                return newAnsweredQuestion;
+            }).catch((error) => {
+                console.log(error);
+            });
+
+
 
             // handle DOM manipulation of correct answer. 
             if (this.state.correctAnswer.id === selectedAnswer.id) {
@@ -82,7 +98,7 @@ class Question extends Component {
     createAnsweredQuestion(AnsweredQuestionDTO) {
         let newAnsweredQuestion = null;
         ///assets/data/answeredQuestion.json
-        fetch('http://localhost:8087/question/'+''+'/answer/', {
+        fetch('http://localhost:8087/question/' + '' + '/answer/', {
             method: 'post',
             body: JSON.stringify(AnsweredQuestionDTO)
         }).then(function (response) {
@@ -188,7 +204,7 @@ class Question extends Component {
 
                     <div className="answers-container">
                         {answers.map((answerProperty) => (
-                            <div className="answer-suggestions" key={answerProperty.id} dataset-id = { answerProperty.id } onClick = { this.handleClick } >
+                            <div className="answer-suggestions" key={answerProperty.id} dataset-id={answerProperty.id} onClick={this.handleClick} >
                                 <AnswerBox key={answerProperty.id} answer={answerProperty.answerName} />
                             </div>
                         ))}
@@ -197,7 +213,7 @@ class Question extends Component {
                         <FeedbackBox explanation={correctAnswer.explanation} url={correctAnswer.url} />
                     </div>
                 </article>
-            );   
+            );
         }
     }
 
