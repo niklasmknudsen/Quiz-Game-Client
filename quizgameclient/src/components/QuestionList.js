@@ -1,5 +1,6 @@
 import React from "react";
 import Question from './Question';
+import '../css/questionList.css';
 
 class QuestionList extends React.Component {
 
@@ -62,7 +63,9 @@ class QuestionList extends React.Component {
                         <section className="question-container">
                             {questions.map((quest) => (
                                 <div className="question-row" key={quest.id} dataset-id={quest.id} onClick={this.handleClick} >
+                                    <div className="column">Field: </div>
                                     <div className="column">{quest.field}</div>
+                                    <div className="column">Points: </div>
                                     <div className="column">{quest.points}</div>
                                 </div>
                             ))}
