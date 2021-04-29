@@ -1,5 +1,5 @@
 import React from "react";
-import Question from 'Question';
+import Question from './Question';
 
 class QuestionList extends React.Component {
 
@@ -15,8 +15,8 @@ class QuestionList extends React.Component {
     }
 
     handleClick = (e) => {
-        let targetEl = e.target;
-        console.log(targetEl);
+        let targetEl = e.target.parentNode;
+        console.log(targetEl.parentNode);
         const selectedQuestionIndex = targetEl.getAttribute("dataset-id");
 
         this.setState({
@@ -34,6 +34,7 @@ class QuestionList extends React.Component {
 
 
                 this.setState({
+                    isLoaded: true,
                     questions: result
                 });
             }, (error) => {
