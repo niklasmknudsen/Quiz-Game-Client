@@ -110,7 +110,8 @@ class Question extends Component {
          * fetch question from database
          */
         // TODO Fix hardcoded ID
-        fetch("http://localhost:8087/question/"+"29c19107-9a91-45ae-8f27-9fb96c095d10")
+        // "29c19107-9a91-45ae-8f27-9fb96c095d10"
+        fetch("http://localhost:8087/question/"+ this.props.questId)
             .then(res => res.json())
             .then(
                 (result) => {
