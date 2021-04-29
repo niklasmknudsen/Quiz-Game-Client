@@ -22,6 +22,10 @@ class Question extends Component {
         this.handleReset = this.handleReset.bind(this);
     }
 
+    /**
+     * Function to handle click on selected Answer in given question
+     * @param {any} e
+     */
     handleClick = (e) => {
         let _this = this;
         if (this.state.clickedTimes < 1) {
@@ -72,11 +76,17 @@ class Question extends Component {
         }
     };
 
+    /**
+     * Function to handle reset of page
+     * @param {any} e
+     */
     handleReset = (e) => {
         window.location.reload();
-
     }
 
+    /**
+     * Function to clear grid for selected item css class green or red
+     * */
     clearAnswersFromColors() {
         let childElements = document.querySelectorAll('.answer-suggestions');
 
@@ -90,7 +100,7 @@ class Question extends Component {
     };
 
     /**
-     * Method to find an answer by id
+     * Function to find an answer by id
      * @param {any} idx
      * @returns null || answer
      */
