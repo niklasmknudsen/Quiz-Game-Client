@@ -25,8 +25,7 @@ class Question extends Component {
     handleClick = (e) => {
         let _this = this;
         if (this.state.clickedTimes < 1) {
-            // call method to clear elements from color classes.
-            this.clearAnswersFromColors();
+
             // gets target element
             let targetEl = e.target.parentNode;
             let selectedAnswerIndex = targetEl.getAttribute('dataset-id');
@@ -38,7 +37,6 @@ class Question extends Component {
             // creates a new instace of a answeredQuestion
             const answeredQuestionDTO = {
                 answer: selectedAnswer.id
-
             };
 
             // calls post endpoint
@@ -77,18 +75,6 @@ class Question extends Component {
 
     }
 
-    clearAnswersFromColors() {
-        let childElements = document.querySelectorAll('.answer-suggestions');
-
-        for (let i = 0; i < childElements.length; i++) {
-            if (childElements[i].classList.contains('green')) {
-                childElements[i].classList.remove('green');
-            } else if (childElements[i].classList.contains('red')) {
-                childElements[i].classList.remove('red');
-            }
-        }
-    };
-
     /**
      * Method to find an answer by id
      * @param {any} idx
@@ -116,7 +102,8 @@ class Question extends Component {
         /* /quesition/:id
          * fetch question from database
          */
-        fetch("http://localhost:8087/question/29c19107-9a91-45ae-8f27-9fb96c095d10")
+        // TODO Fix hardcoded ID
+        fetch("http://localhost:8087/question/"+"29c19107-9a91-45ae-8f27-9fb96c095d10")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -160,7 +147,6 @@ class Question extends Component {
                         <QuestionHeader category={question.category} field={question.field} points={question.points}></QuestionHeader>
                         <QuestionDescription description={question.description}></QuestionDescription>
                     </div>
-
                     <div className="answers-container">
                         {answers.map((answerProperty) => (
                             <div className="answer-suggestions" key={answerProperty.id} dataset-id={answerProperty.id} onClick={this.handleClick} >
